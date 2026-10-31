@@ -1,0 +1,9 @@
+pyspark
+delta-spark
+dagster
+dagster-webserver
+dbt-core
+dbt-duckdb
+pytest
+pandas
+faker
