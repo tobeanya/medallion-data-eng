@@ -1,41 +1,21 @@
-# Medallion Data Engineering
+# Data Engineering Portfolio
 
-A production-style lakehouse project for mastering Medallion Architecture at a Senior Data Engineer level.
+One repository with separate projects for data engineering, modeling, and pipeline operations. Each project has its own domain folder and design documents; shared repository files stay at the root.
 
-## Business scenario
+## Projects
 
-Build a Customer Analytics Lakehouse that ingests customers, products, transactions, and event data and turns them into trusted datasets for revenue reporting, retention analysis, customer health, product analytics, and dashboards.
+### Customer Analytics Lakehouse
+Path: [`projects/customer-analytics-lakehouse/`](projects/customer-analytics-lakehouse/)
 
-## Architecture
+A medallion-architecture learning project for customer, product, transaction, and event data. The folder contains its architecture notes, runbook, and study curriculum.
 
-Source systems → Bronze → Silver → Gold → BI / ML / APIs
+### Energy Planning Data Platform
+Path: [`projects/energy-planning-dbt-platform/`](projects/energy-planning-dbt-platform/)
 
-### Bronze
-Raw, append-oriented ingestion with source fidelity, ingestion metadata, schema capture, replayability, and quarantine.
+A dbt-centered project design for synthetic grid-planning data. It maps prior pipeline experience in reliability analysis, reconciliation, forecasting, battery optimization, GCP ETL, Spark, and Dagster into a concrete MVP. Its current contents are the MVP and architecture design; implementation and benchmark results will be added as they are built and measured.
 
-### Silver
-Validated, typed, deduplicated, conformed data with CDC handling, SCD Type 2, referential integrity, late-arriving data handling, and data-quality enforcement.
+## Repository conventions
 
-### Gold
-Business-ready dimensional and aggregate models including:
-- dim_customer
-- dim_product
-- fact_transactions
-- customer_360
-- monthly_revenue
-- retention_cohorts
-- customer_health
-
-## Target stack
-
-- Python
-- PySpark
-- Delta Lake
-- Databricks
-- dbt
-- Dagster
-- Great Expectations or Soda
-- Terraform
-- GitHub Actions
-
-See `docs/two_week_curriculum.md` for the full learning plan.
+- Use synthetic or public sample data. Do not commit employer data, code, schemas, or confidential business logic.
+- Keep each project's setup, models, tests, and documentation inside its folder unless a dependency or standard is deliberately shared.
+- Keep performance claims tied to reproducible measurements from the project that produced them.
