@@ -37,7 +37,7 @@ From a clean checkout, a developer can generate the sample data, ingest it idemp
 
 ## Project status
 
-The MVP design is in place. The first implementation slice defines source contracts and a deterministic Python generator for CSV/JSON study batches, including reproducible manifests and optional seeded defects for downstream quality checks.
+The dbt modeling slice is implemented and verified locally. It includes source contracts, deterministic CSV/JSON generation, four typed staging views, four analytical marts, and eight dbt data tests. Dagster orchestration and warehouse ingestion are later project milestones.
 
 ## Run the sample data generator
 
@@ -61,6 +61,12 @@ Run the generator tests:
 ```bash
 python -m pip install -e 'projects/energy-planning-dbt-platform[dev]'
 python -m pytest projects/energy-planning-dbt-platform/tests
+```
+
+Build and test the dbt models from this project directory:
+
+```bash
+dbt build --profiles-dir .
 ```
 
 Generated files are intentionally excluded from version control. No project runtime or benchmark results are claimed until those stages are implemented and measured.

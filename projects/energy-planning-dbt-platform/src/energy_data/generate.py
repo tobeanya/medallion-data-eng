@@ -187,10 +187,8 @@ def generate_sample_data(
                     "study_id": STUDY_ID, "scenario_id": sid, "zone_id": zid,
                     "metric_name": metric, "metric_value": reference_value,
                 })
-                for approach_index, approach in enumerate(APPROACHES):
+                for approach in APPROACHES:
                     value = reference_value
-                    if metric == "production_cost_usd":
-                        value += approach_index * 125.0
                     rows["candidate_results.csv"].append({
                         "study_id": STUDY_ID, "scenario_id": sid, "zone_id": zid,
                         "model_approach": approach, "metric_name": metric,

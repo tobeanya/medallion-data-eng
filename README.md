@@ -12,7 +12,7 @@ A medallion-architecture learning project for customer, product, transaction, an
 ### Energy Planning Data Platform
 Path: [`projects/energy-planning-dbt-platform/`](projects/energy-planning-dbt-platform/)
 
-A dbt-centered project for synthetic grid-planning data, built around source contracts, reliability analysis, model reconciliation, load forecasting, battery optimization, GCP ETL, Spark, and Dagster. Its first working slice generates deterministic CSV/JSON source batches and a checksum manifest. The dbt models and orchestration are the next implementation stages.
+A dbt project built from synthetic energy-planning sources. It includes source contracts, deterministic CSV/JSON generation, staging models, reliability, forecasting, battery, and reconciliation marts, plus data-quality tests. The local dbt build passes; Dagster orchestration is a later milestone.
 
 ## Repository conventions
 

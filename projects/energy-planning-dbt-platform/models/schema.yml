@@ -1,0 +1,20 @@
+version: 2
+models:
+  - name: stg_hourly_operations
+    description: Typed hourly operations with a grain of study, scenario, zone, and period.
+    columns:
+      - name: study_id
+        tests: [not_null]
+      - name: scenario_id
+        tests: [not_null]
+      - name: zone_id
+        tests: [not_null]
+      - name: period_id
+        tests: [not_null]
+  - name: mart_reliability_summary
+    description: Reliability and capacity measures by study, scenario, and zone.
+    columns:
+      - name: scenario_id
+        tests: [not_null]
+      - name: unserved_mwh
+        tests: [not_null]

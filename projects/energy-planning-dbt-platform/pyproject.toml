@@ -7,7 +7,7 @@ name = "energy-planning-data-platform"
 version = "0.1.0"
 description = "Synthetic source data and dbt modeling project for energy planning workflows"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = ["dbt-duckdb>=1.8,<2"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]

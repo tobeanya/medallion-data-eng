@@ -1,0 +1,7 @@
+energy_planning:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ./energy_planning.duckdb
+      schema: main
