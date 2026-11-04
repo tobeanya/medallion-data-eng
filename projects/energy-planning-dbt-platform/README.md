@@ -37,4 +37,30 @@ From a clean checkout, a developer can generate the sample data, ingest it idemp
 
 ## Project status
 
-This repository begins with the MVP design. Implementation results and performance measurements will be added only after the corresponding pipeline is built and run.
+The MVP design is in place. The first implementation slice defines source contracts and a deterministic Python generator for CSV/JSON study batches, including reproducible manifests and optional seeded defects for downstream quality checks.
+
+## Run the sample data generator
+
+From the repository root:
+
+```bash
+python projects/energy-planning-dbt-platform/src/energy_data/generate.py \
+  --output-dir projects/energy-planning-dbt-platform/data/generated
+```
+
+Seed a candidate-output mismatch to exercise later reconciliation checks:
+
+```bash
+python projects/energy-planning-dbt-platform/src/energy_data/generate.py \
+  --output-dir /tmp/energy-data-defect \
+  --inject-defect candidate_mismatch
+```
+
+Run the generator tests:
+
+```bash
+python -m pip install -e 'projects/energy-planning-dbt-platform[dev]'
+python -m pytest projects/energy-planning-dbt-platform/tests
+```
+
+Generated files are intentionally excluded from version control. No project runtime or benchmark results are claimed until those stages are implemented and measured.

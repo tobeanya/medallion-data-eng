@@ -1,0 +1,90 @@
+version: 1
+description: Synthetic source contracts for the Energy Planning Data Platform MVP.
+batch_metadata:
+  appended_to_raw_tables_during_ingestion: [source_batch_id, source_system, schema_version, ingested_at_utc]
+  manifest_fields: [source_batch_id, source_system, generated_at_utc, schema_version]
+  timestamp_standard: UTC
+  replay_key: source_batch_id
+sources:
+  studies:
+    file: study.csv
+    format: csv
+    grain: one row per study
+    primary_key: [study_id]
+    required: [study_id, study_name, planning_year]
+  scenarios:
+    file: scenarios.csv
+    format: csv
+    grain: one row per scenario in a study
+    primary_key: [study_id, scenario_id]
+    foreign_keys: [[study_id, studies.study_id]]
+    required: [study_id, scenario_id, scenario_name, load_multiplier]
+  zones:
+    file: zones.csv
+    format: csv
+    grain: one row per zone in a study
+    primary_key: [study_id, zone_id]
+    foreign_keys: [[study_id, studies.study_id]]
+    required: [study_id, zone_id, zone_name]
+  assets:
+    file: assets.csv
+    format: csv
+    grain: one row per asset in a study
+    primary_key: [study_id, asset_id]
+    foreign_keys: [[study_id, zone_id, zones.study_id, zones.zone_id]]
+    required: [study_id, asset_id, zone_id, asset_type]
+  model_runs:
+    file: model_runs.csv
+    format: csv
+    grain: one row per study, scenario, and model approach
+    primary_key: [study_id, scenario_id, model_approach]
+    foreign_keys: [[study_id, scenario_id, scenarios.study_id, scenarios.scenario_id]]
+    required: [study_id, scenario_id, model_approach, run_id, run_status]
+  hourly_operations:
+    file: hourly_operations.csv
+    format: csv
+    grain: one row per study, scenario, zone, and operating period
+    primary_key: [study_id, scenario_id, zone_id, period_id]
+    foreign_keys:
+      - [study_id, scenario_id, scenarios.study_id, scenarios.scenario_id]
+      - [study_id, zone_id, zones.study_id, zones.zone_id]
+    required: [study_id, scenario_id, zone_id, period_id, load_mw, dispatch_mw]
+  weather:
+    file: weather.json
+    format: json
+    grain: one row per study, zone, and operating period
+    primary_key: [study_id, zone_id, period_id]
+    required: [study_id, zone_id, period_id, temperature_c, wind_speed_mps]
+  load_forecasts:
+    file: load_forecasts.csv
+    format: csv
+    grain: one row per study, scenario, zone, model, horizon, and period
+    primary_key: [study_id, scenario_id, zone_id, model_name, horizon_hours, period_id]
+    required: [study_id, scenario_id, zone_id, model_name, horizon_hours, period_id, forecast_mw, actual_mw]
+  battery_bids:
+    file: battery_bids.csv
+    format: csv
+    grain: one row per study, scenario, asset, market, and period
+    primary_key: [study_id, scenario_id, asset_id, market, period_id]
+    required: [study_id, scenario_id, asset_id, market, period_id, bid_price_usd_mwh]
+  battery_dispatch:
+    file: battery_dispatch.csv
+    format: csv
+    grain: one row per study, scenario, asset, and period
+    primary_key: [study_id, scenario_id, asset_id, period_id]
+    required: [study_id, scenario_id, asset_id, period_id, dispatched_mwh, ancillary_service_mw]
+  reference_results:
+    file: reference_results.csv
+    format: csv
+    grain: one row per study, scenario, zone, and metric
+    primary_key: [study_id, scenario_id, zone_id, metric_name]
+    required: [study_id, scenario_id, zone_id, metric_name, metric_value]
+  candidate_results:
+    file: candidate_results.csv
+    format: csv
+    grain: one row per study, scenario, zone, approach, and metric
+    primary_key: [study_id, scenario_id, zone_id, model_approach, metric_name]
+    foreign_keys:
+      - [study_id, scenario_id, scenarios.study_id, scenarios.scenario_id]
+      - [study_id, zone_id, zones.study_id, zones.zone_id]
+    required: [study_id, scenario_id, zone_id, model_approach, metric_name, metric_value]
